@@ -78,7 +78,3 @@ Programmet vil bede om dit Lectio-brugernavn og adgangskode og tilføje dine opg
 
 Programmet er udviklet af **Khizar Irshad Chaudhry**.  
 Hvis du har spørgsmål eller forslag, er du velkommen til at kontakte mig.
-
----
-
-Med denne README-fil er det nu klart, hvordan man sætter både Google API’et og skoleID korrekt op for at bruge programmet med deres egen skole.
