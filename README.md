@@ -1,82 +1,84 @@
-# Lectio Opgave-Kalender Sync
+# Lectio Opgave Kalender Synnc
 
-Dette program hjælper dig med at synkronisere dine opgaver fra Lectio til din Google Kalender. Det henter opgaveinformationer fra Lectio og opretter events i din Google Kalender baseret på afleveringsfristerne. På denne måde har du altid styr på dine deadlines!
+## Introduktion
+
+Dette program scraper opgaver fra Lectio og tilføjer dem automatisk som events i din Google Kalender. Programmet logger ind på Lectio, henter opgaverne, og konverterer dem til kalenderbegivenheder ved hjælp af Google Calendar API.
+
+---
 
 ## Funktioner
 
-- Hent opgaver fra Lectio.
-- Opret events i Google Kalender med afleveringsfrister.
-- Slet automatisk tidligere opgave-events i kalenderen, så kun de nyeste er til stede.
-  
-## Krav
+- Automatisk login på Lectio og scraping af opgaver.
+- Omdanner opgaver til kalenderbegivenheder med afleveringsdatoer.
+- Sletter gamle opgave-events fra Google Kalender.
+- Understøtter Lectio-elever på alle skoler ved blot at ændre skoleID.
 
-Før du kan bruge programmet, skal du sikre dig, at du har følgende:
+---
 
-1. **Python** installeret (version 3.8 eller nyere).
-2. **Google Calendar API** opsat med et `client_secret.json`-fil (se instruktionerne nedenfor).
-3. **Selenium WebDriver** og Chrome installeret for at logge ind på Lectio.
+## Opsætning
 
-## Installation
+Følg nedenstående trin for at konfigurere programmet og få det til at køre:
 
-### 1. Klon repository og installer afhængigheder
-Klon dette repository til din lokale maskine og installer afhængighederne:
+### 1. Klon repository'et
 
 ```bash
-git clone https://github.com/din-bruger/lectio-opgave-sync.git
-cd lectio-opgave-sync
+git clone https://github.com/KhizarIrshadChaudhry/Lectio-Opgave-Kalender-Sync.git
+cd Lectio-Opgave-Kalender-Sync
+```
+### 2. Installer nødvendige Python-pakker
+
+Sørg for, at du har Python installeret. Installer derefter de nødvendige pakker ved at køre:
+
+```bash
 pip install -r requirements.txt
 ```
 
-### 2. Opsætning af Google Calendar API
+### 3. Opret et Google Calendar API-projekt
 
-For at kunne oprette og slette events i din Google Kalender skal du opsætte **Google Calendar API** og downloade din egen `client_secret.json`-fil.
+For at programmet kan oprette events i din Google Kalender, skal du opsætte Google Calendar API:
 
-Følg disse trin:
-
-1. Gå til [Google Cloud Console](https://console.cloud.google.com/).
+1. Gå til Google Developers Console: [Google Developer Console](https://console.developers.google.com/).
 2. Opret et nyt projekt.
-3. Naviger til **APIs & Services > Credentials**.
-4. Klik på **Create Credentials** og vælg **OAuth 2.0 Client IDs**.
-5. Vælg applikationstypen som **Desktop App**.
-6. Download den genererede `client_secret.json`-fil.
-7. Flyt denne fil til programmets rodmappe, dvs. samme mappe som `main.py`.
+3. Aktivér "Google Calendar API" for dit projekt.
+4. Opret et OAuth 2.0-klient-id under "Credentials".
+5. Download `client_secret.json` og placer det i samme mappe som dit program.
+6. Sørg for at ændre stien til filen i koden, hvis det er nødvendigt.
 
-For mere detaljeret vejledning, kan du følge denne guide fra Google: [Guide til opsætning af Google Calendar API](https://developers.google.com/calendar/quickstart/python).
+**Flere detaljer om opsætning af Google Calendar API:**  
+[Google Calendar API - Python Quickstart](https://developers.google.com/calendar/quickstart/python)
 
-### 3. Konfigurer Selenium WebDriver
+### 4. Skift skoleID til dit eget
 
-Selenium bruges til at logge ind på Lectio og hente opgaver. Du skal have **Chrome** installeret samt **ChromeDriver**, der matcher din Chrome-version.
+For at få adgang til opgaverne fra din egen skole, skal du skifte `skoleID` i koden. Som standard er skoleID sat til **NEXT Sukkertoppen HTX** (skoleID = "518"). Du kan finde skoleID for din skole ved at gå til din Lectio-startside og se på URL'en, der ser sådan her ud:
 
-1. Download **ChromeDriver** her: [ChromeDriver Download](https://chromedriver.chromium.org/downloads).
-2. Sørg for, at `chromedriver.exe` er placeret et sted i dit system-`PATH`, eller tilføj stien til programmet i koden, hvis det er nødvendigt.
+```
+https://www.lectio.dk/lectio/{SKOLE_ID}/forside.aspx
+```
 
-## Brug af programmet
+Her skal du erstatte `{SKOLE_ID}` med tallet i URL'en for din skole.
 
-Når alt er sat op, kan du køre programmet fra terminalen:
+I koden skal du ændre linjen (linje 175):
+```python
+skoleID = "518"  # Ændre til dit eget skoleID
+```
+
+### 5. Kør programmet
+
+For at køre programmet, skal du blot starte det i terminalen:
 
 ```bash
 python main.py
 ```
 
-Følg instruktionerne i terminalen:
+Programmet vil bede om dit Lectio-brugernavn og adgangskode og tilføje dine opgaver til Google Kalender.
 
-1. Indtast dit **Lectio brugernavn** og **kodeord**.
-2. Programmet henter opgaverne fra Lectio.
-3. Opgaverne bliver automatisk oprettet som events i din Google Kalender.
-4. Eventuelle tidligere opgave-events vil blive slettet for at undgå duplikater.
+---
 
-## Token-fil
+## Kontakt
 
-Efter første godkendelse vil der blive gemt en `token.json`-fil. Denne fil bruges til at gemme dine Google-kalenderoplysninger, så du ikke behøver at godkende adgang hver gang du kører programmet. Hvis du ønsker at logge ind med en anden Google-konto, kan du slette `token.json`.
+Programmet er udviklet af **Khizar Irshad Chaudhry**.  
+Hvis du har spørgsmål eller forslag, er du velkommen til at kontakte mig.
 
-## Fejlfinding
+---
 
-Hvis du støder på problemer, kan du tjekke følgende:
-
-- Sørg for, at din `client_secret.json` er korrekt placeret og gyldig.
-- Sørg for, at **Selenium WebDriver** er opdateret og korrekt installeret.
-- Hvis du får en timeout-fejl, kan du prøve at øge Selenium WebDriver's timeout i koden.
-
-## Udviklet af
-
-**Khizar Irshad Chaudhry**
+Med denne README-fil er det nu klart, hvordan man sætter både Google API’et og skoleID korrekt op for at bruge programmet med deres egen skole.
