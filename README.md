@@ -1,4 +1,4 @@
-# Lectio Opgave Kalender Synnc
+# Lectio Opgave Kalender Sync
 
 ## Introduktion
 
