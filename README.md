@@ -80,6 +80,3 @@ Hvis du støder på problemer, kan du tjekke følgende:
 ## Udviklet af
 
 **Khizar Irshad Chaudhry**
-
-Skriv gerne, hvis der opstår problemer.
----
