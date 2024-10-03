@@ -76,5 +76,4 @@ Programmet vil bede om dit Lectio-brugernavn og adgangskode og tilføje dine opg
 
 ## Kontakt
 
-Programmet er udviklet af **Khizar Irshad Chaudhry**.  
 Hvis du har spørgsmål eller forslag, er du velkommen til at kontakte mig.
